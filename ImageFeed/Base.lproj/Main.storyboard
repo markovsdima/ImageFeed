@@ -25,7 +25,7 @@
                         </tabBarAppearance>
                     </tabBar>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="tiN-Jg-fwv"/>
+                        <segue destination="Xpr-ov-zQq" kind="relationship" relationship="viewControllers" id="tiN-Jg-fwv"/>
                         <segue destination="nJ8-bF-8vM" kind="relationship" relationship="viewControllers" id="yYJ-pP-B80"/>
                     </connections>
                 </tabBarController>
@@ -134,14 +134,14 @@
                             <constraint firstItem="1tf-Cd-FhJ" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="oD1-89-zcG"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" image="tab_editorial_active" id="5su-3e-Azr"/>
+                    <navigationItem key="navigationItem" id="lWH-SM-Nus"/>
                     <connections>
                         <outlet property="tableView" destination="1tf-Cd-FhJ" id="vBg-Lh-W7y"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="139.69465648854961" y="-2.1126760563380285"/>
+            <point key="canvasLocation" x="1067.6923076923076" y="-2.1327014218009479"/>
         </scene>
         <!--Profile-->
         <scene sceneID="6Ff-87-rS8">
@@ -206,6 +206,30 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vnf-O0-BMb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="138" y="658"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="EVv-Qi-2YQ">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Xpr-ov-zQq" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="" image="tab_editorial_active" id="5su-3e-Azr"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="XAK-gW-EqK">
+                        <rect key="frame" x="0.0" y="47" width="390" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" name="YP White"/>
+                        <color key="barTintColor" name="YP White"/>
+                        <navigationBarAppearance key="standardAppearance">
+                            <color key="backgroundColor" name="YP Black"/>
+                        </navigationBarAppearance>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="AKR-fm-c0Q"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Jwk-Ra-eps" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="138.46153846153845" y="-2.1327014218009479"/>
         </scene>
     </scenes>
     <resources>
