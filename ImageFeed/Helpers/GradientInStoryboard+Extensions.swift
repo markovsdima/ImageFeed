@@ -12,7 +12,7 @@ private var endGradientColorAssociatedKey : UIColor = .black
 private var observationGradientView: NSKeyValueObservation?
 
 @IBDesignable
-class MyGradientView: UIView {
+final class MyGradientView: UIView {
     
     @IBInspectable var color1: UIColor = .red {
         didSet { setNeedsDisplay() }

@@ -28,12 +28,12 @@ extension ImagesListViewController {
             return
         }
         
-        cell.cellImage.image = image
-        cell.dateLabel.text = Date().dateTimeString
-        
+        let date: String = Date().dateTimeString
         let isLiked = indexPath.row % 2 == 0
         let likeImage = isLiked ? UIImage(named: "Like Active") : UIImage(named: "Like Inactive")
-        cell.likeButton.setImage(likeImage, for: .normal)
+        
+        cell.configCell(image: image, date: date, likeImage: likeImage!)
+        cell.selectionStyle = .none
     }
 }
 
