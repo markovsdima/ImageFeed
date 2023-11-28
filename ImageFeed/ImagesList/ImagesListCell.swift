@@ -14,7 +14,6 @@ final class ImagesListCell: UITableViewCell {
     @IBOutlet weak private var dateLabel: UILabel!
     
     func configCell (image: UIImage, date: String, likeImage: UIImage) {
-        
         cellImage.image = image
         dateLabel.text = date
         likeButton.setImage(likeImage, for: .normal)

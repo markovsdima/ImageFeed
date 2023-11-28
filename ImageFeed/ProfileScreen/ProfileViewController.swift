@@ -8,20 +8,18 @@
 import UIKit
 
 final class ProfileViewController: UIViewController {
-
+    
     let defaultProfileImage = UIImage(systemName: "person.crop.circle.fill")!
     let profileImage = UIImage(named: "ProfilePhoto")
     let profilePersonName = "Екатерина Новикова"
     let profileLoginName = "@ekaterina_nov"
     let profileDescription = "Hello, world!"
     
-    
     private var profileImageView: UIImageView?
     private var profilePersonNameLabel: UILabel?
     private var profileLoginNameLabel: UILabel?
     private var profileDescriptionLabel: UILabel?
     private var profileLogoutButton: UIButton?
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,18 +40,16 @@ final class ProfileViewController: UIViewController {
         
         setupProfileLogoutButton()
         setupProfileLogoutButtonConstraints()
-        
     }
     
-    func setupProfileImageView(with image: UIImage?) {
+    private func setupProfileImageView(with image: UIImage?) {
         let imageView = UIImageView(image: image ?? defaultProfileImage)
-        
         imageView.tintColor = .gray
         view.addSubview(imageView)
         self.profileImageView = imageView
     }
     
-    func setupProfileImageViewConstraints() {
+    private func setupProfileImageViewConstraints() {
         guard let imageView = profileImageView else { return }
         
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -65,7 +61,7 @@ final class ProfileViewController: UIViewController {
         ])
     }
     
-    func setupProfilePersonNameLabel(with name: String) {
+    private func setupProfilePersonNameLabel(with name: String) {
         let label = UILabel()
         label.text = name
         label.textColor = UIColor(named: "YP White")
@@ -74,7 +70,7 @@ final class ProfileViewController: UIViewController {
         self.profilePersonNameLabel = label
     }
     
-    func setupProfilePersonNameLabelConstraints() {
+    private func setupProfilePersonNameLabelConstraints() {
         guard let label = profilePersonNameLabel else { return }
         
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -84,7 +80,7 @@ final class ProfileViewController: UIViewController {
         ])
     }
     
-    func setupProfileLoginNameLabel(with login: String) {
+    private func setupProfileLoginNameLabel(with login: String) {
         let label = UILabel()
         label.text = login
         label.textColor = UIColor(named: "YP Grey")
@@ -94,7 +90,7 @@ final class ProfileViewController: UIViewController {
     }
     
     
-    func setupProfileLoginNameLabelConstraints() {
+    private func setupProfileLoginNameLabelConstraints() {
         guard let label = profileLoginNameLabel else { return }
         
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -104,7 +100,7 @@ final class ProfileViewController: UIViewController {
         ])
     }
     
-    func setupProfileDescriptionLabel(with description: String) {
+    private func setupProfileDescriptionLabel(with description: String) {
         let label = UILabel()
         label.text = description
         label.textColor = UIColor(named: "YP White")
@@ -113,7 +109,7 @@ final class ProfileViewController: UIViewController {
         self.profileDescriptionLabel = label
     }
     
-    func setupProfileDescriptionLabelConstraints() {
+    private func setupProfileDescriptionLabelConstraints() {
         guard let label = profileDescriptionLabel else { return }
         
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -123,7 +119,7 @@ final class ProfileViewController: UIViewController {
         ])
     }
     
-    func setupProfileLogoutButton() {
+    private func setupProfileLogoutButton() {
         let button = UIButton.systemButton(with: UIImage(named: "Exit")!,
                                            target: self,
                                            action: #selector(self.buttonClicked))
@@ -133,7 +129,7 @@ final class ProfileViewController: UIViewController {
         self.profileLogoutButton = button
     }
     
-    func setupProfileLogoutButtonConstraints() {
+    private func setupProfileLogoutButtonConstraints() {
         guard let button = profileLogoutButton else { return }
         
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -144,29 +140,15 @@ final class ProfileViewController: UIViewController {
             button.centerYAnchor.constraint(equalTo: profileImageView!.centerYAnchor)
         ])
     }
-     
     
-    func setMainBgColor(named color: String) {
+    
+    private func setMainBgColor(named color: String) {
         view.backgroundColor = UIColor(named: color)
     }
     
-    @objc func buttonClicked() {
+    @objc private func buttonClicked() {
         // Do something
         
     }
-    
-    /*
-    func showProfilePerson(name: String){
-        let label = UILabel()
-        label.text = name
-        label.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(label)
-        NSLayoutConstraint.activate([
-            label.topAnchor.constraint(equalTo: profileImageView!.bottomAnchor, constant: 20),
-            label.leadingAnchor.constraint(equalTo: profileImageView!.leadingAnchor)
-        ])
-    }
-     */
-    
     
 }
