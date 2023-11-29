@@ -15,7 +15,10 @@
 		32A1C8A02AF433730023D159 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 32A1C89F2AF433730023D159 /* Assets.xcassets */; };
 		32A1C8A32AF433730023D159 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32A1C8A12AF433730023D159 /* LaunchScreen.storyboard */; };
 		32A267BA2B0BEC060019D23B /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A267B92B0BEC060019D23B /* Date+Extensions.swift */; };
+		32BD83D52B17124C00409B4D /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BD83D42B17124C00409B4D /* UIColor+Extensions.swift */; };
 		32CC654D2AFC613200751E8D /* GradientInStoryboard+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CC654C2AFC613200751E8D /* GradientInStoryboard+Extensions.swift */; };
+		32CD87032B13689F00561612 /* SingleImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CD87022B13689F00561612 /* SingleImageViewController.swift */; };
+		32D82B352B1332880051540E /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32D82B342B1332880051540E /* ProfileViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,7 +32,10 @@
 		32A1C8A22AF433730023D159 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		32A1C8A42AF433730023D159 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		32A267B92B0BEC060019D23B /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
+		32BD83D42B17124C00409B4D /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		32CC654C2AFC613200751E8D /* GradientInStoryboard+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GradientInStoryboard+Extensions.swift"; sourceTree = "<group>"; };
+		32CD87022B13689F00561612 /* SingleImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleImageViewController.swift; sourceTree = "<group>"; };
+		32D82B342B1332880051540E /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,7 +77,8 @@
 		32A1C8952AF433720023D159 /* ImageFeed */ = {
 			isa = PBXGroup;
 			children = (
-				32A267B82B0BEAAB0019D23B /* Helpers */,
+				32CD87012B13687C00561612 /* SingleImage */,
+				32D82B332B1332540051540E /* ProfileScreen */,
 				3295914C2AFA7CFE00D5BCA2 /* ImagesList */,
 				32A1C8962AF433720023D159 /* AppDelegate.swift */,
 				32A1C8982AF433720023D159 /* SceneDelegate.swift */,
@@ -79,6 +86,7 @@
 				32A1C89C2AF433720023D159 /* Main.storyboard */,
 				32A1C8A12AF433730023D159 /* LaunchScreen.storyboard */,
 				32A1C8A42AF433730023D159 /* Info.plist */,
+				32A267B82B0BEAAB0019D23B /* Helpers */,
 			);
 			path = ImageFeed;
 			sourceTree = "<group>";
@@ -88,8 +96,25 @@
 			children = (
 				32CC654C2AFC613200751E8D /* GradientInStoryboard+Extensions.swift */,
 				32A267B92B0BEC060019D23B /* Date+Extensions.swift */,
+				32BD83D42B17124C00409B4D /* UIColor+Extensions.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		32CD87012B13687C00561612 /* SingleImage */ = {
+			isa = PBXGroup;
+			children = (
+				32CD87022B13689F00561612 /* SingleImageViewController.swift */,
+			);
+			path = SingleImage;
+			sourceTree = "<group>";
+		};
+		32D82B332B1332540051540E /* ProfileScreen */ = {
+			isa = PBXGroup;
+			children = (
+				32D82B342B1332880051540E /* ProfileViewController.swift */,
+			);
+			path = ProfileScreen;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -167,7 +192,10 @@
 				3295914B2AFA7CD400D5BCA2 /* ImagesListCell.swift in Sources */,
 				32CC654D2AFC613200751E8D /* GradientInStoryboard+Extensions.swift in Sources */,
 				32A1C8972AF433720023D159 /* AppDelegate.swift in Sources */,
+				32D82B352B1332880051540E /* ProfileViewController.swift in Sources */,
 				32A1C8992AF433720023D159 /* SceneDelegate.swift in Sources */,
+				32CD87032B13689F00561612 /* SingleImageViewController.swift in Sources */,
+				32BD83D52B17124C00409B4D /* UIColor+Extensions.swift in Sources */,
 				32A267BA2B0BEC060019D23B /* Date+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
