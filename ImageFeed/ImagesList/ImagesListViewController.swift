@@ -27,7 +27,7 @@ final class ImagesListViewController: UIViewController {
             let viewController = segue.destination as! SingleImageViewController
             let indexPath = sender as! IndexPath
             let image = UIImage(named: photosName[indexPath.row])
-            viewController.image = image
+            viewController.setImage(image: image)
         } else {
             super.prepare(for: segue, sender: sender)
         }
@@ -86,3 +86,8 @@ extension ImagesListViewController: UITableViewDataSource {
     
 }
 
+extension ImagesListViewController {
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+}

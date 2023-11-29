@@ -9,11 +9,11 @@ import UIKit
 
 final class ProfileViewController: UIViewController {
     
-    let defaultProfileImage = UIImage(systemName: "person.crop.circle.fill")!
-    let profileImage = UIImage(named: "ProfilePhoto")
-    let profilePersonName = "Екатерина Новикова"
-    let profileLoginName = "@ekaterina_nov"
-    let profileDescription = "Hello, world!"
+    private let defaultProfileImage = UIImage(systemName: "person.crop.circle.fill")!
+    private let profileImage = UIImage(named: "ProfilePhoto")
+    private let profilePersonName = "Екатерина Новикова"
+    private let profileLoginName = "@ekaterina_nov"
+    private let profileDescription = "Hello, world!"
     
     private var profileImageView: UIImageView?
     private var profilePersonNameLabel: UILabel?
@@ -24,7 +24,7 @@ final class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setMainBgColor(named: "YP Black")
+        setMainBgColor(UIColor.ypBlack)
         
         setupProfileImageView(with: profileImage)
         setupProfileImageViewConstraints()
@@ -57,14 +57,14 @@ final class ProfileViewController: UIViewController {
             imageView.widthAnchor.constraint(equalToConstant: 70),
             imageView.heightAnchor.constraint(equalToConstant: 70),
             imageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32),
-            imageView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20)
+            imageView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16)
         ])
     }
     
     private func setupProfilePersonNameLabel(with name: String) {
         let label = UILabel()
         label.text = name
-        label.textColor = UIColor(named: "YP White")
+        label.textColor = UIColor.ypWhite
         label.font = UIFont.systemFont(ofSize: 23, weight: UIFont.Weight.bold)
         view.addSubview(label)
         self.profilePersonNameLabel = label
@@ -83,7 +83,7 @@ final class ProfileViewController: UIViewController {
     private func setupProfileLoginNameLabel(with login: String) {
         let label = UILabel()
         label.text = login
-        label.textColor = UIColor(named: "YP Grey")
+        label.textColor = UIColor.ypGray
         label.font = UIFont.systemFont(ofSize: 13)
         view.addSubview(label)
         self.profileLoginNameLabel = label
@@ -103,7 +103,7 @@ final class ProfileViewController: UIViewController {
     private func setupProfileDescriptionLabel(with description: String) {
         let label = UILabel()
         label.text = description
-        label.textColor = UIColor(named: "YP White")
+        label.textColor = UIColor.ypWhite
         label.font = UIFont.systemFont(ofSize: 13)
         view.addSubview(label)
         self.profileDescriptionLabel = label
@@ -124,7 +124,9 @@ final class ProfileViewController: UIViewController {
                                            target: self,
                                            action: #selector(self.buttonClicked))
         
-        button.tintColor = UIColor(named: "YP Red")
+        button.tintColor = UIColor.ypRed
+        button.tintColor = UIColor.ypRed
+        button.tintColor = UIColor.ypRed
         view.addSubview(button)
         self.profileLogoutButton = button
     }
@@ -136,14 +138,14 @@ final class ProfileViewController: UIViewController {
         NSLayoutConstraint.activate([
             button.widthAnchor.constraint(equalToConstant: 44),
             button.heightAnchor.constraint(equalToConstant: 44),
-            button.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            button.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             button.centerYAnchor.constraint(equalTo: profileImageView!.centerYAnchor)
         ])
     }
     
     
-    private func setMainBgColor(named color: String) {
-        view.backgroundColor = UIColor(named: color)
+    private func setMainBgColor(_ color: UIColor) {
+        view.backgroundColor = color
     }
     
     @objc private func buttonClicked() {
@@ -151,4 +153,10 @@ final class ProfileViewController: UIViewController {
         
     }
     
+}
+
+extension ProfileViewController {
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
 }
