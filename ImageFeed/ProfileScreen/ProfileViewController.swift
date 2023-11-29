@@ -125,8 +125,6 @@ final class ProfileViewController: UIViewController {
                                            action: #selector(self.buttonClicked))
         
         button.tintColor = UIColor.ypRed
-        button.tintColor = UIColor.ypRed
-        button.tintColor = UIColor.ypRed
         view.addSubview(button)
         self.profileLogoutButton = button
     }
