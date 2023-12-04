@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		32574BA02B1B42B10064167E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32574B9F2B1B42B10064167E /* Constants.swift */; };
+		32574BA32B1C962A0064167E /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32574BA22B1C962A0064167E /* AuthViewController.swift */; };
+		32574BA52B1CF6B30064167E /* WebViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32574BA42B1CF6B30064167E /* WebViewViewController.swift */; };
 		3295914B2AFA7CD400D5BCA2 /* ImagesListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3295914A2AFA7CD400D5BCA2 /* ImagesListCell.swift */; };
 		32A1C8972AF433720023D159 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A1C8962AF433720023D159 /* AppDelegate.swift */; };
 		32A1C8992AF433720023D159 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A1C8982AF433720023D159 /* SceneDelegate.swift */; };
@@ -22,6 +25,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		32574B9F2B1B42B10064167E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		32574BA22B1C962A0064167E /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
+		32574BA42B1CF6B30064167E /* WebViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewViewController.swift; sourceTree = "<group>"; };
 		3295914A2AFA7CD400D5BCA2 /* ImagesListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListCell.swift; sourceTree = "<group>"; };
 		32A1C8932AF433720023D159 /* ImageFeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageFeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		32A1C8962AF433720023D159 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -49,6 +55,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		32574BA12B1C96090064167E /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				32574BA22B1C962A0064167E /* AuthViewController.swift */,
+				32574BA42B1CF6B30064167E /* WebViewViewController.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
 		3295914C2AFA7CFE00D5BCA2 /* ImagesList */ = {
 			isa = PBXGroup;
 			children = (
@@ -77,9 +92,10 @@
 		32A1C8952AF433720023D159 /* ImageFeed */ = {
 			isa = PBXGroup;
 			children = (
-				32CD87012B13687C00561612 /* SingleImage */,
+				32574BA12B1C96090064167E /* Auth */,
 				32D82B332B1332540051540E /* ProfileScreen */,
 				3295914C2AFA7CFE00D5BCA2 /* ImagesList */,
+				32CD87012B13687C00561612 /* SingleImage */,
 				32A1C8962AF433720023D159 /* AppDelegate.swift */,
 				32A1C8982AF433720023D159 /* SceneDelegate.swift */,
 				32A1C89F2AF433730023D159 /* Assets.xcassets */,
@@ -87,6 +103,7 @@
 				32A1C8A12AF433730023D159 /* LaunchScreen.storyboard */,
 				32A1C8A42AF433730023D159 /* Info.plist */,
 				32A267B82B0BEAAB0019D23B /* Helpers */,
+				32574B9F2B1B42B10064167E /* Constants.swift */,
 			);
 			path = ImageFeed;
 			sourceTree = "<group>";
@@ -145,7 +162,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1430;
-				LastUpgradeCheck = 1430;
+				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					32A1C8922AF433720023D159 = {
 						CreatedOnToolsVersion = 14.3.1;
@@ -188,11 +205,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32574BA32B1C962A0064167E /* AuthViewController.swift in Sources */,
 				32A1C89B2AF433720023D159 /* ImagesListViewController.swift in Sources */,
 				3295914B2AFA7CD400D5BCA2 /* ImagesListCell.swift in Sources */,
 				32CC654D2AFC613200751E8D /* GradientInStoryboard+Extensions.swift in Sources */,
 				32A1C8972AF433720023D159 /* AppDelegate.swift in Sources */,
 				32D82B352B1332880051540E /* ProfileViewController.swift in Sources */,
+				32574BA02B1B42B10064167E /* Constants.swift in Sources */,
+				32574BA52B1CF6B30064167E /* WebViewViewController.swift in Sources */,
 				32A1C8992AF433720023D159 /* SceneDelegate.swift in Sources */,
 				32CD87032B13689F00561612 /* SingleImageViewController.swift in Sources */,
 				32BD83D52B17124C00409B4D /* UIColor+Extensions.swift in Sources */,
@@ -258,6 +278,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -318,6 +339,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
