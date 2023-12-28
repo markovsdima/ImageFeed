@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol AuthViewControllerDelegate: AnyObject {
+    func authViewController(_ vc: AuthViewController, didAuthenticateWithCode code: String)
+}
+
 class AuthViewController: UIViewController {
     private let authLogo = UIImage(named: "auth_screen_logo")
     
@@ -15,8 +19,11 @@ class AuthViewController: UIViewController {
     
     private let ShowWebViewSegueIdentifier = "ShowWebView"
     
+    weak var delegate: AuthViewControllerDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setMainBgColor(UIColor.ypBlack)
         setupAuthLogoImageView(with: authLogo)
         setupAuthLogoImageViewConstraints()
@@ -95,9 +102,9 @@ extension AuthViewController {
 
 extension AuthViewController: WebViewViewControllerDelegate {
     func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String) {
-        //TODO: process code
+        delegate?.authViewController(self, didAuthenticateWithCode: code)
     }
-
+    
     func webViewViewControllerDidCancel(_ vc: WebViewViewController) {
         dismiss(animated: true)
     }
