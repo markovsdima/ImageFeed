@@ -102,3 +102,9 @@ extension SplashViewController {
         }
     }
 }
+
+extension SplashViewController {
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+}
