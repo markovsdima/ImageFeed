@@ -8,6 +8,7 @@
 import UIKit
 
 final class ProfileViewController: UIViewController {
+    private let profileService = ProfileService.shared
     
     private let defaultProfileImage = UIImage(systemName: "person.crop.circle.fill")!
     private let profileImage = UIImage(named: "ProfilePhoto")
@@ -23,6 +24,7 @@ final class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //profileService.fetchProfile(<#T##token: String##String#>, completion: <#T##(Result<ProfileService.Profile, Error>) -> Void#>)
         
         setMainBgColor(UIColor.ypBlack)
         

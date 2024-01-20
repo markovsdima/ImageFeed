@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ProgressHUD
 
 class SplashViewController: UIViewController {
     private let splashLogo = UIImage(named: "LaunchScreenLogo")
@@ -15,6 +16,8 @@ class SplashViewController: UIViewController {
     
     private let oauth2Service = OAuth2Service()
     private let oauth2TokenStorage = OAuth2TokenStorage()
+    
+    private let profileService = ProfileService()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +30,7 @@ class SplashViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if oauth2TokenStorage.token != nil {
+            fetchProfile(token: oauth2TokenStorage.token!)
             switchToTabBarController()
         } else {
             performSegue(withIdentifier: ShowAuthenticationScreenSegueIdentifier, sender: nil)
@@ -67,8 +71,10 @@ private extension SplashViewController {
 
 extension SplashViewController: AuthViewControllerDelegate {
     func authViewController(_ vc: AuthViewController, didAuthenticateWithCode code: String) {
+        UIBlockingProgressHUD.show()
         dismiss(animated: true) { [weak self] in
             guard let self = self else { return }
+            UIBlockingProgressHUD.show()
             self.fetchOAuthToken(code)
         }
     }
@@ -78,10 +84,27 @@ extension SplashViewController: AuthViewControllerDelegate {
             guard let self = self else { return }
             switch result {
             case .success:
-                print("434")
-                self.switchToTabBarController()
+                //self.switchToTabBarController()
+                //UIBlockingProgressHUD.dismiss()
+                self.fetchProfile(token: oauth2TokenStorage.token!)
             case .failure:
                 // TODO [Sprint 11]
+                UIBlockingProgressHUD.dismiss()
+                break
+            }
+        }
+    }
+    
+    private func fetchProfile(token: String) {
+        profileService.fetchProfile (token) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success:
+                UIBlockingProgressHUD.dismiss()
+                self.switchToTabBarController()
+            case .failure:
+                UIBlockingProgressHUD.dismiss()
+                // Показать ошибку TODO
                 break
             }
         }
