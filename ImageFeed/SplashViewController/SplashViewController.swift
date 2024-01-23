@@ -17,7 +17,7 @@ class SplashViewController: UIViewController {
     private let oauth2Service = OAuth2Service()
     private let oauth2TokenStorage = OAuth2TokenStorage()
     
-    private let profileService = ProfileService()
+    private let profileService = ProfileService.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,8 +30,12 @@ class SplashViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if oauth2TokenStorage.token != nil {
-            fetchProfile(token: oauth2TokenStorage.token!)
-            switchToTabBarController()
+            //fetchProfile(token: oauth2TokenStorage.token!)
+            
+            //profileService.convertTask()
+            
+            //switchToTabBarController()
+            convertAndGet()
         } else {
             performSegue(withIdentifier: ShowAuthenticationScreenSegueIdentifier, sender: nil)
         }
@@ -76,6 +80,7 @@ extension SplashViewController: AuthViewControllerDelegate {
             guard let self = self else { return }
             UIBlockingProgressHUD.show()
             self.fetchOAuthToken(code)
+            //self.convertAndGet()
         }
     }
     
@@ -84,31 +89,54 @@ extension SplashViewController: AuthViewControllerDelegate {
             guard let self = self else { return }
             switch result {
             case .success:
+                self.convertAndGet()
                 //self.switchToTabBarController()
                 //UIBlockingProgressHUD.dismiss()
-                self.fetchProfile(token: oauth2TokenStorage.token!)
+                //self.fetchProfile(token: oauth2TokenStorage.token!)
+                print("555")
             case .failure:
                 // TODO [Sprint 11]
-                UIBlockingProgressHUD.dismiss()
+                
                 break
+            }
+            UIBlockingProgressHUD.dismiss()
+        }
+    }
+    
+    private func convertAndGet() {
+        //try await profileService.fetchProfile(<#T##token: String##String#>)
+        //switchToTabBarController()
+        UIBlockingProgressHUD.show()
+        Task {
+            do {
+                //try await profileService.fetchProfile(oauth2TokenStorage.token!)
+                guard let token = oauth2TokenStorage.token else { return }
+                try await profileService.convertTask(token)
+                UIBlockingProgressHUD.dismiss()
+                switchToTabBarController()
+            } catch {
+                print("Request failed with error: \(error)")
             }
         }
     }
     
-    private func fetchProfile(token: String) {
-        profileService.fetchProfile (token) { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .success:
-                UIBlockingProgressHUD.dismiss()
-                self.switchToTabBarController()
-            case .failure:
-                UIBlockingProgressHUD.dismiss()
-                // Показать ошибку TODO
-                break
-            }
-        }
-    }
+//    private func fetchProfile(token: String) {
+//        profileService.fetchProfile (token) { [weak self] result in
+//            guard let self = self else { return }
+//            switch result {
+//            case .success:
+//                UIBlockingProgressHUD.dismiss()
+//                self.switchToTabBarController()
+//            case .failure:
+//                UIBlockingProgressHUD.dismiss()
+//                // Показать ошибку TODO
+//                break
+//            }
+//        }
+//    }
+    
+    
+    
 }
 
 extension SplashViewController {

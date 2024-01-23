@@ -38,8 +38,37 @@ extension URLSession {
     }
 }
 
-private enum NetworkError: Error {
+enum NetworkError: Error {
     case httpStatusCode(Int)
     case urlRequestError(Error)
     case urlSessionError
+    case invalidData
 }
+
+
+//extension URLSession {
+//    func objectTask<T: Decodable>(
+//        for request: URLRequest,
+//        completion: @escaping (Result<T, Error>) -> Void
+//    ) -> URLSessionTask {
+//        let task = dataTask(with: request, completionHandler: { data, response, error in
+//            // TODO [Sprint 11] Написать реализацию
+//            guard let data else {
+//                if let error {
+//                    completion(.failure(error))
+//                }
+//                return
+//            }
+//            let decoder = JSONDecoder()
+//            decoder.keyDecodingStrategy = .convertFromSnakeCase
+//            do {
+//                //let profileResult = try decoder.decode(ProfileResult.self, from: data)
+//                completion(.success(profileResult))
+//            } catch {
+//                completion(.failure(NetworkError.invalidData))
+//            }
+//            
+//        })
+//        return task
+//    }
+//}

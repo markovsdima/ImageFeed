@@ -10,7 +10,7 @@ import Foundation
 final class OAuth2Service {
     static let shared = OAuth2Service()
     
-    private let urlSession = URLSession.shared
+    private let session = URLSession.shared
     
     private var task: URLSessionTask?
     private var lastCode: String?
@@ -24,17 +24,14 @@ final class OAuth2Service {
         }
     }
     
-    func fetchOAuthToken(
-        _ code: String,
-        completion: @escaping (Result<String, Error>) -> (Void)
-    ){
+    func fetchOAuthToken(_ code: String, completion: @escaping (Result<String, Error>) -> (Void)) {
         assert(Thread.isMainThread)
         if lastCode == code { return }
         task?.cancel()
         lastCode = code
         
         let request = authTokenRequest(code: code)
-        let task = object(for: request) { [weak self] result in
+        let task = createUrlTask(for: request) { [weak self] result in
             
             guard let self = self else { return }
             switch result {
@@ -54,13 +51,10 @@ final class OAuth2Service {
 }
 
 private extension OAuth2Service {
-    func object(
-        for request: URLRequest,
-        completion: @escaping (Result<OAuthTokenResponseBody, Error>) -> Void
-    ) -> URLSessionTask {
+    func createUrlTask(for request: URLRequest, completion: @escaping (Result<OAuthTokenResponseBody, Error>) -> Void) -> URLSessionTask {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
-        return urlSession.data(for: request) { (result: Result<Data, Error>) in
+        return session.data(for: request) { (result: Result<Data, Error>) in
             let response = result.flatMap { data -> Result<OAuthTokenResponseBody, Error> in
                 Result {
                     try decoder.decode(OAuthTokenResponseBody.self, from: data)
