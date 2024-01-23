@@ -20,9 +20,9 @@ final class ProfileService {
     
     private(set) var profile: Profile?
     
-    //@MainActor
+    @MainActor
     func fetchProfile(_ token: String) async throws -> ProfileResult {
-        var request = createProfileRequest(token: token)
+        let request = createProfileRequest(token: token)
         
         let response = try await session.data(for: request)
         let decoder = JSONDecoder()
@@ -38,7 +38,7 @@ final class ProfileService {
     }
     
     func convertTask(_ token: String) async throws {
-        Task {
+        //Task {
             let result = try await self.fetchProfile(_: token)
             
             let username = result.username
@@ -46,10 +46,13 @@ final class ProfileService {
             let loginName = "@" + result.username
             let bio = result.bio ?? ""
             
-            self.profile = Profile(username: username, name: name, loginName: loginName, bio: bio)
+        self.profile = Profile(username: username, name: name, loginName: loginName, bio: bio)
             //self.delegate?.didReceiveProfile()
+        //self.profile = profile
             //print(profile)
-        }
+            
+        //}
+        //return profile
     }
     
     /*

@@ -18,6 +18,7 @@ class SplashViewController: UIViewController {
     private let oauth2TokenStorage = OAuth2TokenStorage()
     
     private let profileService = ProfileService.shared
+    private let profileImageService = ProfileImageService.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -114,10 +115,28 @@ extension SplashViewController: AuthViewControllerDelegate {
                 try await profileService.convertTask(token)
                 UIBlockingProgressHUD.dismiss()
                 switchToTabBarController()
+                try await profileImageService.fetchProfileImageURL(token, username: profileService.profile?.username)
+                
             } catch {
+                UIBlockingProgressHUD.dismiss()
+                showErrorAlert()
                 print("Request failed with error: \(error)")
             }
         }
+    }
+    
+    private func showErrorAlert() {
+        let alert = UIAlertController(title: "Что-то пошло не так(",
+                                      message: "Не удалось войти в систему",
+                                      preferredStyle: .alert)
+        let action = UIAlertAction(
+            title: "Ок",
+            style: .default,
+            handler: { _ in
+                alert.dismiss(animated: true)
+            })
+        alert.addAction(action)
+        self.present(alert, animated: true)
     }
     
 //    private func fetchProfile(token: String) {
