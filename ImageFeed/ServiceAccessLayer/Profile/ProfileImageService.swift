@@ -24,6 +24,7 @@ final class ProfileImageService {
         guard(response as? HTTPURLResponse)?.statusCode == 200 else { return }
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
+        
         guard let userResult = try? decoder.decode(UserResult.self, from: data) else { return }
         NotificationCenter.default
             .post(name: ProfileImageService.didChangeNotification,

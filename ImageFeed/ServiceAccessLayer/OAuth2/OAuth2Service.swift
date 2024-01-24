@@ -24,6 +24,10 @@ final class OAuth2Service {
         }
     }
     
+    func removeAuthToken() {
+        OAuth2TokenStorage().removeToken()
+    }
+    
     func fetchOAuthToken(_ code: String, completion: @escaping (Result<String, Error>) -> (Void)) {
         assert(Thread.isMainThread)
         if lastCode == code { return }
@@ -65,13 +69,11 @@ private extension OAuth2Service {
     }
     
     func authTokenRequest(code: String) -> URLRequest {
-        
-        //var urlComponents = URLComponents(string: "https://unsplash.com/oauth/token")!
         var urlComponents = URLComponents()
         urlComponents.scheme = "https"
         urlComponents.host = "unsplash.com"
         urlComponents.path = "/oauth/token"
-
+        
         urlComponents.queryItems = [
             URLQueryItem(name: "client_id", value: Constants.accessKey),
             URLQueryItem(name: "client_secret", value: Constants.secretKey),
@@ -93,5 +95,3 @@ private extension OAuth2Service {
         let createdAt: Int
     }
 }
-
-

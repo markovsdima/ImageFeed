@@ -24,8 +24,6 @@ final class WebViewViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        
         setupWebView()
         setupWebViewConstraints()
         setupNavBackButtonView()
@@ -43,25 +41,7 @@ final class WebViewViewController: UIViewController {
                  guard let self = self else { return }
                  self.updateProgress()
              })
-//        webView?.addObserver(
-//            self,
-//            forKeyPath: #keyPath(WKWebView.estimatedProgress),
-//            context: nil)
-        
     }
-    
-//    override func observeValue(
-//        forKeyPath keyPath: String?,
-//        of object: Any?,
-//        change: [NSKeyValueChangeKey : Any]?,
-//        context: UnsafeMutableRawPointer?
-//    ) {
-//        if keyPath == #keyPath(WKWebView.estimatedProgress) {
-//            updateProgress()
-//        } else {
-//            super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
-//        }
-//    }
     
     private func updateProgress() {
         guard let progressView, let webView else { return }
@@ -114,7 +94,6 @@ final class WebViewViewController: UIViewController {
                                            action: #selector(self.didTapBackButton))
         
         button.tintColor = UIColor.ypBlack
-        
         
         view.addSubview(button)
         self.navBackButton = button

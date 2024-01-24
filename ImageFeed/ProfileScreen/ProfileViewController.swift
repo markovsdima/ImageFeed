@@ -10,7 +10,6 @@ import Kingfisher
 
 final class ProfileViewController: UIViewController {
     
-    
     private let profileService = ProfileService.shared
     
     private let defaultProfileImage = UIImage(systemName: "person.crop.circle.fill")!
@@ -27,90 +26,8 @@ final class ProfileViewController: UIViewController {
     private var profileDescriptionLabel: UILabel?
     private var profileLogoutButton: UIButton?
     
-    
-//    struct ProfileResult: Decodable {
-//        let userName: String
-//        let firstName: String
-//        let lastName: String
-//        let bio: String
-//    }
-    
-    //var dataDecoded: ProfileResult?
-    //var data: Data?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //profileService.convertTask()
-        //profile = profileService.profile
-        //print(profileService.profile ?? "zero")
-        
-        
-        
-        
-        //profileService.fetchProfile(<#T##token: String##String#>, completion: <#T##(Result<ProfileService.Profile, Error>) -> Void#>)
-        //print(OAuth2Service().authToken!)
-        //guard let profile = profileService.profile else { return }
-        //self.profileLoginNameLabel?.text = profile.username
-        
-        
-//        Task {
-//            let result = try await profileService.fetchProfile(_: OAuth2Service().authToken!)
-//            
-//            let username = result.username
-//            let name = result.firstName + " " + (result.lastName ?? "")
-//            let loginName = "@" + result.username
-//            let bio = result.bio ?? ""
-//            
-//            
-//            
-//        }
-        
-        
-//        profileService.fetchProfile(OAuth2Service().authToken!) { result in
-//            switch result {
-//            case .success(let data):
-//                //self.profileLoginNameLabel?.text = data.username
-//                //self.profilePersonNameLabel?.text = data.firstName
-//                
-//                print(result)
-//            case .failure(let error):
-//                print(error)
-//            }
-//        }
-        
-//        let authToken = OAuth2TokenStorage().token
-//        let url = URL(string: "https://unsplash.com/me")
-//        var request = URLRequest(url: url!)
-//        request.setValue("Bearer \(authToken!)", forHTTPHeaderField: "Authorization")
-//        let dataTask = URLSession.shared.dataTask(with: request, completionHandler: { (data, response, error) -> Void in
-//            if let data = data {
-//                DispatchQueue.main.async {
-//                    self.profileLoginNameLabel?.text = "Димон"
-//                    self.data = data
-//                }
-//                
-//            }
-//            
-//        })
-//        dataTask.resume()
-//        //let dataDecoded = try JSONDecoder().decode(ProfileResult, from: data!)
-//        func loadMovies(handler: @escaping (Result<ProfileResult, Error>) -> Void) {
-//            
-//                
-//                case .success(let data):
-//                    do {
-//                        let mostPopularMovies = try JSONDecoder().decode(ProfileResult.self, from: data)
-//                        handler(.success(mostPopularMovies))
-//                    } catch {
-//                        handler(.failure(error))
-//                    }
-//                case .failure(let error):
-//                    handler(.failure(error))
-//                
-//            
-//        }
-        
         
         profileImageServiceObserver = NotificationCenter.default
             .addObserver(
@@ -121,10 +38,8 @@ final class ProfileViewController: UIViewController {
                 guard let self = self else { return }
                 self.updateAvatar()
             }
-        updateAvatar()
         
         setUpViewAndConstraints()
-        
         updateProfileDetails()
         updateAvatar()
     }
@@ -269,16 +184,14 @@ final class ProfileViewController: UIViewController {
         ])
     }
     
-    
     private func setMainBgColor(_ color: UIColor) {
         view.backgroundColor = color
     }
     
     @objc private func buttonClicked() {
-        // Do something
+        // Do something to logout
         
     }
-    
 }
 
 extension ProfileViewController {
