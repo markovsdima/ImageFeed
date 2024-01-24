@@ -31,7 +31,6 @@ final class ProfileImageService {
                   object: self,
                   userInfo: ["URL" : avatarURL as Any])
         self.avatarURL = userResult.profileImage?.large
-        print(avatarURL!)
     }
 }
 
