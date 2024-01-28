@@ -34,18 +34,6 @@ final class ProfileImageService {
     }
 }
 
-extension ProfileImageService {
-    struct UserResult: Decodable {
-        let profileImage: ImageUrl?
-    }
-    
-    struct ImageUrl: Decodable {
-        let small: String
-        let medium: String
-        let large: String
-    }
-}
-
 private extension ProfileImageService {
     func createProfileImageRequest (token: String, username: String) -> URLRequest? {
         var urlComponents = URLComponents()
@@ -55,6 +43,7 @@ private extension ProfileImageService {
         
         let url = urlComponents.url!
         var request = URLRequest(url: url)
+        request.httpMethod = "GET"
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         return request
     }

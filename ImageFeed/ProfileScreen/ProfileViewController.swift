@@ -189,7 +189,7 @@ final class ProfileViewController: UIViewController {
     }
     
     @objc private func buttonClicked() {
-        // Do something to logout
+    // TODO: profile logout function call
         
     }
 }

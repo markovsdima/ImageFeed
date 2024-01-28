@@ -8,7 +8,7 @@
 import UIKit
 import ProgressHUD
 
-class SplashViewController: UIViewController {
+final class SplashViewController: UIViewController {
     private let splashLogo = UIImage(named: "LaunchScreenLogo")
     private var splashLogoImageView: UIImageView?
     
@@ -23,7 +23,6 @@ class SplashViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        oauth2TokenStorage.removeToken()
         setMainBgColor(UIColor.ypBlack)
         setupSplashLogoImageView(with: splashLogo)
         setupSplashLogoImageViewConstraints()

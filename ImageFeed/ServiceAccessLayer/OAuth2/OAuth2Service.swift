@@ -87,11 +87,4 @@ private extension OAuth2Service {
         request.httpMethod = "POST"
         return request
     }
-    
-    struct OAuthTokenResponseBody: Decodable {
-        let accessToken: String
-        let tokenType: String
-        let scope: String
-        let createdAt: Int
-    }
 }

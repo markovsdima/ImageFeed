@@ -43,22 +43,6 @@ final class ProfileService {
     }
 }
 
-extension ProfileService {
-    struct ProfileResult: Decodable {
-        let username: String
-        let firstName: String
-        let lastName: String?
-        let bio: String?
-    }
-    
-    struct Profile: Codable {
-        let username: String
-        let name: String
-        let loginName: String
-        let bio: String
-    }
-}
-
 private extension ProfileService {
     func createProfileRequest (token: String) -> URLRequest {
         var urlComponents = URLComponents()
@@ -68,6 +52,7 @@ private extension ProfileService {
         
         let url = urlComponents.url!
         var request = URLRequest(url: url)
+        request.httpMethod = "GET"
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         return request
     }

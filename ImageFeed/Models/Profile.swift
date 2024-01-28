@@ -1,0 +1,15 @@
+//
+//  Profile.swift
+//  ImageFeed
+//
+//  Created by Dmitry Markovskiy on 28.01.2024.
+//
+
+import Foundation
+
+struct Profile: Codable {
+    let username: String
+    let name: String
+    let loginName: String
+    let bio: String
+}
