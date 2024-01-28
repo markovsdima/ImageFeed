@@ -128,10 +128,9 @@ extension SplashViewController: AuthViewControllerDelegate {
                                       preferredStyle: .alert)
         let action = UIAlertAction(
             title: "Ок",
-            style: .default,
-            handler: { _ in
+            style: .default) { _ in
                 alert.dismiss(animated: true)
-            })
+            }
         alert.addAction(action)
         self.present(alert, animated: true)
     }
