@@ -11,7 +11,7 @@ protocol AuthViewControllerDelegate: AnyObject {
     func authViewController(_ vc: AuthViewController, didAuthenticateWithCode code: String)
 }
 
-class AuthViewController: UIViewController {
+final class AuthViewController: UIViewController {
     private let authLogo = UIImage(named: "auth_screen_logo")
     
     private var authLogoImageView: UIImageView?

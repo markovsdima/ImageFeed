@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import ProgressHUD
 
-class SplashViewController: UIViewController {
+final class SplashViewController: UIViewController {
     private let splashLogo = UIImage(named: "LaunchScreenLogo")
     private var splashLogoImageView: UIImageView?
     
@@ -15,6 +16,9 @@ class SplashViewController: UIViewController {
     
     private let oauth2Service = OAuth2Service()
     private let oauth2TokenStorage = OAuth2TokenStorage()
+    
+    private let profileService = ProfileService.shared
+    private let profileImageService = ProfileImageService.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,10 +31,22 @@ class SplashViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if oauth2TokenStorage.token != nil {
-            switchToTabBarController()
+            convertAndGet()
         } else {
-            performSegue(withIdentifier: ShowAuthenticationScreenSegueIdentifier, sender: nil)
+            showAuthViewController()
         }
+    }
+    
+    private func showAuthViewController() {
+        guard let authViewController = UIStoryboard(
+            name: "Main",
+            bundle: .main
+        ).instantiateViewController(
+            withIdentifier: "AuthViewController"
+        ) as? AuthViewController else { return }
+        authViewController.delegate = self
+        authViewController.modalPresentationStyle = .fullScreen
+        present(authViewController, animated: true)
     }
     
     private func switchToTabBarController() {
@@ -67,8 +83,10 @@ private extension SplashViewController {
 
 extension SplashViewController: AuthViewControllerDelegate {
     func authViewController(_ vc: AuthViewController, didAuthenticateWithCode code: String) {
+        UIBlockingProgressHUD.show()
         dismiss(animated: true) { [weak self] in
             guard let self = self else { return }
+            UIBlockingProgressHUD.show()
             self.fetchOAuthToken(code)
         }
     }
@@ -78,28 +96,43 @@ extension SplashViewController: AuthViewControllerDelegate {
             guard let self = self else { return }
             switch result {
             case .success:
-                print("434")
-                self.switchToTabBarController()
+                self.convertAndGet()
+                
             case .failure:
-                // TODO [Sprint 11]
+                UIBlockingProgressHUD.dismiss()
+                self.showErrorAlert()
                 break
             }
         }
     }
-}
-
-extension SplashViewController {
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == ShowAuthenticationScreenSegueIdentifier {
-            guard
-                let navigationController = segue.destination as? UINavigationController,
-                let viewController = navigationController.viewControllers[0] as? AuthViewController
-            else { fatalError("Failed to prepare for \(ShowAuthenticationScreenSegueIdentifier)") }
-            
-            viewController.delegate = self
-        } else {
-            super.prepare(for: segue, sender: sender)
+    
+    private func convertAndGet() {
+        UIBlockingProgressHUD.show()
+        Task {
+            do {
+                guard let token = oauth2TokenStorage.token else { return }
+                try await profileService.convertTask(token)
+                UIBlockingProgressHUD.dismiss()
+                switchToTabBarController()
+                try await profileImageService.fetchProfileImageURL(token, username: profileService.profile?.username)
+            } catch {
+                UIBlockingProgressHUD.dismiss()
+                showErrorAlert()
+            }
         }
+    }
+    
+    private func showErrorAlert() {
+        let alert = UIAlertController(title: "Что-то пошло не так(",
+                                      message: "Не удалось войти в систему",
+                                      preferredStyle: .alert)
+        let action = UIAlertAction(
+            title: "Ок",
+            style: .default) { _ in
+                alert.dismiss(animated: true)
+            }
+        alert.addAction(action)
+        self.present(alert, animated: true)
     }
 }
 

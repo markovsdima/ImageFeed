@@ -6,14 +6,19 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class ProfileViewController: UIViewController {
+    
+    private let profileService = ProfileService.shared
     
     private let defaultProfileImage = UIImage(systemName: "person.crop.circle.fill")!
     private let profileImage = UIImage(named: "ProfilePhoto")
     private let profilePersonName = "Екатерина Новикова"
     private let profileLoginName = "@ekaterina_nov"
     private let profileDescription = "Hello, world!"
+    
+    private var profileImageServiceObserver: NSObjectProtocol?
     
     private var profileImageView: UIImageView?
     private var profilePersonNameLabel: UILabel?
@@ -24,6 +29,44 @@ final class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        profileImageServiceObserver = NotificationCenter.default
+            .addObserver(
+                forName: ProfileImageService.didChangeNotification,
+                object: nil,
+                queue: .main
+            ) { [weak self] _ in
+                guard let self = self else { return }
+                self.updateAvatar()
+            }
+        
+        setUpViewAndConstraints()
+        updateProfileDetails()
+        updateAvatar()
+    }
+    
+    private func updateAvatar() {
+        guard
+            let profileImageURL = ProfileImageService.shared.avatarURL,
+            let url = URL(string: profileImageURL),
+            let profileImageView = profileImageView
+        else { return }
+        let processor = RoundCornerImageProcessor(cornerRadius: 35, backgroundColor: .clear)
+        profileImageView.kf.indicatorType = .activity
+        profileImageView.kf.setImage(with: url,
+                                     placeholder: UIImage(named:"avatarPlaceholder"),
+                                     options: [.processor(processor)])
+        profileImageView.layer.cornerRadius = 35
+        profileImageView.layer.masksToBounds = true
+    }
+    
+    func updateProfileDetails() {
+        guard let profile = profileService.profile else { return }
+        profileLoginNameLabel?.text = profile.loginName
+        profilePersonNameLabel?.text = profile.name
+        profileDescriptionLabel?.text = profile.bio
+    }
+    
+    private func setUpViewAndConstraints() {
         setMainBgColor(UIColor.ypBlack)
         
         setupProfileImageView(with: profileImage)
@@ -141,16 +184,14 @@ final class ProfileViewController: UIViewController {
         ])
     }
     
-    
     private func setMainBgColor(_ color: UIColor) {
         view.backgroundColor = color
     }
     
     @objc private func buttonClicked() {
-        // Do something
+    // TODO: profile logout function call
         
     }
-    
 }
 
 extension ProfileViewController {
