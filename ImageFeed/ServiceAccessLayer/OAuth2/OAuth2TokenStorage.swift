@@ -9,9 +9,10 @@ import Foundation
 import SwiftKeychainWrapper
 
 final class OAuth2TokenStorage {
-    let accessToken = ""
     
-    let keychain = KeychainWrapper.standard
+    private let keychain = KeychainWrapper.standard
+    
+    let accessToken = ""
     
     var token: String? {
         get {
