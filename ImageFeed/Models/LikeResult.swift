@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct isLiked: Decodable {
+struct IsLiked: Decodable {
     let photo: PhotoResult
 }

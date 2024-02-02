@@ -8,24 +8,30 @@
 import Foundation
 
 final class OAuth2Service {
+    
+    // MARK: - Public Properties
     static let shared = OAuth2Service()
     
+    // MARK: - Private Properties
     private let session = URLSession.shared
-    
+    private let oauth2TokenStorage = OAuth2TokenStorage.shared
     private var task: URLSessionTask?
     private var lastCode: String?
-    
     private (set) var authToken: String? {
         get {
-            return OAuth2TokenStorage().token
+            return oauth2TokenStorage.token
         }
         set {
-            OAuth2TokenStorage().token = newValue
+            oauth2TokenStorage.token = newValue
         }
     }
     
+    // MARK: - Initializers
+    private init() {}
+    
+    // MARK: - Public Methods
     func removeAuthToken() {
-        OAuth2TokenStorage().removeToken()
+        oauth2TokenStorage.removeToken()
     }
     
     func fetchOAuthToken(_ code: String, completion: @escaping (Result<String, Error>) -> (Void)) {

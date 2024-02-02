@@ -8,19 +8,22 @@
 import Foundation
 
 final class ImagesListService {
-    private (set) var photos: [Photo] = []
     
+    // MARK: - Public Properties
     static let shared = ImagesListService()
-    
     static let didChangeNotification = Notification.Name(rawValue: "ImagesListServiceDidChange")
     
+    // MARK: - Private Properties
+    private (set) var photos: [Photo] = []
     private let session = URLSession.shared
-    
     private var lastLoadedPage: Int = 0
-    
     private let dateFormatter = ISO8601DateFormatter()
+    private var isFetching: Bool = false
     
+    // MARK: - Initializers
+    private init() {}
     
+    // MARK: - Public Methods
     func fetchPhotosNextPage() async throws -> [PhotoResult] {
         let nextPage = lastLoadedPage + 1
         guard let request = createImagesListRequest(nextPage: nextPage) else { return [] }
@@ -35,17 +38,21 @@ final class ImagesListService {
         return result
     }
     
+    @MainActor
     func photosTask() {
         Task(priority: .userInitiated) {
             do {
-                //if isFetching == true { return }
-                let result = try await fetchPhotosNextPage()
+                if isFetching == true { return }
+                self.isFetching = true
+                assert(Thread.isMainThread)
+                let result = try await self.fetchPhotosNextPage()
                 var photos: [Photo] = []
                 result.forEach { photo in
                     photos.append(self.convert(photo: photo))
                 }
                 self.photos += photos
                 NotificationCenter.default.post(name: ImagesListService.didChangeNotification, object: self)
+                self.isFetching = false
             } catch {
                 print("Error: \(error.localizedDescription)")
             }
@@ -95,7 +102,7 @@ final class ImagesListService {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         
-        let result = try decoder.decode(isLiked.self, from: response.0)
+        let result = try decoder.decode(IsLiked.self, from: response.0)
         let isLiked = result.photo.likedByUser
         
         if let index = self.photos.firstIndex(where: { $0.id == photoId }) {

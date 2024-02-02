@@ -12,15 +12,17 @@ protocol AuthViewControllerDelegate: AnyObject {
 }
 
 final class AuthViewController: UIViewController {
-    private let authLogo = UIImage(named: "auth_screen_logo")
     
-    private var authLogoImageView: UIImageView?
-    private var loginButton: UIButton?
-    
-    private let ShowWebViewSegueIdentifier = "ShowWebView"
-    
+    // MARK: - Public Properties
     weak var delegate: AuthViewControllerDelegate?
     
+    // MARK: - Private Properties
+    private let authLogo = UIImage(named: "auth_screen_logo")
+    private var authLogoImageView: UIImageView?
+    private var loginButton: UIButton?
+    private let ShowWebViewSegueIdentifier = "ShowWebView"
+    
+    // MARK: - View Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -31,6 +33,7 @@ final class AuthViewController: UIViewController {
         setupLoginButtonViewConstraints()
     }
     
+    // MARK: - Private Methods
     private func setupAuthLogoImageView(with logo: UIImage?) {
         let imageView = UIImageView(image: logo)
         view.addSubview(imageView)

@@ -9,15 +9,16 @@ import Foundation
 
 final class ProfileService {
     
+    // MARK: - Public Properties
     static let shared = ProfileService()
     
+    // MARK: - Private Properties
     private let session = URLSession.shared
     private var task: URLSessionTask?
-    
     private var lastToken: String?
-    
     private(set) var profile: Profile?
     
+    // MARK: - Public Methods
     func fetchProfile(_ token: String) async throws -> ProfileResult {
         let request = createProfileRequest(token: token)
         

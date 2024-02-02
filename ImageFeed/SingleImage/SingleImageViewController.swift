@@ -5,10 +5,19 @@
 //  Created by Dmitry Markovskiy on 26.11.2023.
 //
 
-import UIKit
 import Kingfisher
+import UIKit
 
 final class SingleImageViewController: UIViewController {
+    
+    // MARK: - IB Outlets
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var scrollView: UIScrollView!
+    
+    // MARK: - Public Properties
+    var fullImageUrl: URL?
+    
+    // MARK: - Private Properties
     private var image: UIImage! {
         didSet {
             guard isViewLoaded else { return }
@@ -17,11 +26,7 @@ final class SingleImageViewController: UIViewController {
         }
     }
     
-    var fullImageUrl: URL?
-    
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var scrollView: UIScrollView!
-    
+    // MARK: - View Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
         getImage()
@@ -29,6 +34,21 @@ final class SingleImageViewController: UIViewController {
         scrollView.maximumZoomScale = 1.25
     }
     
+    // MARK: - IB Actions
+    @IBAction private func didTapShareButton(_ sender: Any) {
+        guard let image else { return }
+        let share = UIActivityViewController(
+            activityItems: [image],
+            applicationActivities: nil
+        )
+        present(share, animated: true, completion: nil)
+    }
+    
+    @IBAction private func didTapBackButton(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    // MARK: - Public Methods
     func getImage() {
         UIBlockingProgressHUD.show()
         imageView.kf.setImage(with: fullImageUrl) { [weak self] result in
@@ -46,19 +66,6 @@ final class SingleImageViewController: UIViewController {
     
     func setImage(image: UIImage?) {
         self.image = image
-    }
-    
-    @IBAction private func didTapShareButton(_ sender: Any) {
-        guard let image else { return }
-        let share = UIActivityViewController(
-            activityItems: [image],
-            applicationActivities: nil
-        )
-        present(share, animated: true, completion: nil)
-    }
-    
-    @IBAction private func didTapBackButton(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
     }
 }
 
