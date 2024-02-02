@@ -18,14 +18,10 @@ final class ImagesListService {
     
     private var lastLoadedPage: Int = 0
     
-    private var isFetching: Bool = false
+    private let dateFormatter = ISO8601DateFormatter()
     
     
     func fetchPhotosNextPage() async throws -> [PhotoResult] {
-//        isFetching = true
-//        defer {
-//            isFetching = false
-//        }
         let nextPage = lastLoadedPage + 1
         guard let request = createImagesListRequest(nextPage: nextPage) else { return [] }
         let response = try await session.data(for: request)
@@ -35,19 +31,11 @@ final class ImagesListService {
         
         let result = try decoder.decode([PhotoResult].self, from: response.0)
         
-//        result.forEach { photo in
-//            self.photos.append(self.convert(photo: photo))
-//        }
-        
         self.lastLoadedPage = nextPage
         return result
     }
     
     func photosTask() {
-//        if isFetching == true {
-//            print("IsFetchingError")
-//            return
-//        }
         Task(priority: .userInitiated) {
             do {
                 //if isFetching == true { return }
@@ -68,7 +56,7 @@ final class ImagesListService {
         return Photo(
             id: photo.id,
             size: CGSize(width: Double(photo.width), height: Double(photo.height)),
-            createdAt: ISO8601DateFormatter().date(from: photo.createdAt ?? ""),
+            createdAt: dateFormatter.date(from: photo.createdAt ?? ""),
             welcomeDescription: photo.description,
             thumbImageURL: photo.urls.thumb,
             largeImageURL: photo.urls.full,
@@ -97,26 +85,50 @@ final class ImagesListService {
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         return request
     }
-}
-
-extension ImagesListService {
     
-    
-    struct PhotoResult: Decodable {
-        let id: String
-        let createdAt: String?
-        let description: String?
-        let likedByUser: Bool
-        let width: Int
-        let height: Int
-        let urls: UrlsResult
+    func changeLike(photoId: String, isLike: Bool) async throws {
+        let method = isLike ?  "POST" : "DELETE"
+        guard let request = createChangeLikeRequest(photoId: photoId, method: method) else { return }
+        
+        let response = try await session.data(for: request)
+        
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        
+        let result = try decoder.decode(isLiked.self, from: response.0)
+        let isLiked = result.photo.likedByUser
+        
+        if let index = self.photos.firstIndex(where: { $0.id == photoId }) {
+            let photo = self.photos[index]
+            
+            let newPhoto = Photo(
+                id: photo.id,
+                size: photo.size,
+                createdAt: photo.createdAt,
+                welcomeDescription: photo.welcomeDescription,
+                thumbImageURL: photo.thumbImageURL,
+                largeImageURL: photo.largeImageURL,
+                isLiked: !photo.isLiked
+            )
+            
+            self.photos[index] = newPhoto
+        }
     }
     
-    struct UrlsResult: Decodable {
-        let raw: String
-        let full: String
-        let regular: String
-        let small: String
-        let thumb: String
+    func createChangeLikeRequest(photoId: String, method: String) -> URLRequest? {
+        guard let token = OAuth2Service.shared.authToken else {
+            assertionFailure("token is nil")
+            return nil
+        }
+        var urlComponents = URLComponents()
+        urlComponents.scheme = "https"
+        urlComponents.host = "api.unsplash.com"
+        urlComponents.path = "/photos/\(photoId)/like"
+        
+        let url = urlComponents.url!
+        var request = URLRequest(url: url)
+        request.httpMethod = method
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        return request
     }
 }

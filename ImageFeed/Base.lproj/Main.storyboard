@@ -113,6 +113,9 @@
                                                     <buttonConfiguration key="configuration" style="plain" image="Like Inactive">
                                                         <color key="baseForegroundColor" red="0.51443066240167945" green="0.10588235294117647" blue="0.12941176470588237" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </buttonConfiguration>
+                                                    <connections>
+                                                        <action selector="didTapLikeButton:" destination="rsp-a1-vTT" eventType="touchUpInside" id="N9K-El-sBe"/>
+                                                    </connections>
                                                 </button>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jnX-kJ-PmW" userLabel="Gradient" customClass="MyGradientView" customModule="ImageFeed" customModuleProvider="target">
                                                     <rect key="frame" x="16" y="250" width="358" height="30"/>

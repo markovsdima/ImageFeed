@@ -44,10 +44,10 @@ final class ImagesListViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == showSingleImageSequeIdentifier {
-            let viewController = segue.destination as! SingleImageViewController
-            let indexPath = sender as! IndexPath
-            let image = UIImage(named: photosName[indexPath.row])
-            viewController.setImage(image: image)
+            guard let viewController = segue.destination as? SingleImageViewController else { return }
+            guard let indexPath = sender as? IndexPath else { return }
+            
+            viewController.fullImageUrl = URL(string: photos[indexPath.row].largeImageURL)
         } else {
             super.prepare(for: segue, sender: sender)
         }
@@ -59,7 +59,6 @@ extension ImagesListViewController {
         let oldCount = photos.count
         let newCount = imagesListService.photos.count
         photos = imagesListService.photos
-        print(photos)
         
         if oldCount != newCount {
             tableView.performBatchUpdates {
@@ -67,7 +66,7 @@ extension ImagesListViewController {
                     IndexPath(row: i, section: 0)
                 }
                 tableView.insertRows(at: indexPaths, with: .automatic)
-            } //completion: { _ in }
+            }
         }
     }
     
@@ -79,18 +78,12 @@ extension ImagesListViewController {
         if indexPath.row + 1 == photos.count {
             imagesListService.photosTask()
         }
-//        if indexPath.row == tableView.numberOfRows(inSection: 0) - 1 {
-//            imagesListService.photosTask()
-//        }
     }
     
     func configCell(
         for cell: ImagesListCell,
         with indexPath: IndexPath
     ) {
-//        guard let image = UIImage(named: photosName[indexPath.row]) else {
-//            return
-//        }
         guard let stub = UIImage(named: "ImageCardStub") else { return }
         
         let imageUrl = photos[indexPath.row].thumbImageURL
@@ -98,16 +91,17 @@ extension ImagesListViewController {
         
         cell.cellImage.kf.indicatorType = .activity
         cell.cellImage.kf.setImage(with: url, placeholder: stub) { [weak self] _ in
-            //print(url)
             guard let self = self else { return }
             self.tableView.reloadRows(at: [indexPath], with: .automatic)
         }
+        cell.setIsLiked(photos[indexPath.row].isLiked)
         
-        let date: String = Date().dateTimeString
-        let isLiked = indexPath.row % 2 == 0
-        let likeImage = isLiked ? UIImage(named: "Like Active") : UIImage(named: "Like Inactive")
+        if let photoCreatedAt = photos[indexPath.row].createdAt {
+            cell.configDate(date: photoCreatedAt.dateString)
+        } else {
+            cell.configDate(date: "")
+        }
         
-        //cell.configCell(image: image, date: date, likeImage: likeImage!)
         cell.selectionStyle = .none
     }
 }
@@ -131,7 +125,6 @@ extension ImagesListViewController: UITableViewDelegate {
         
         let scale = imageViewWidth / imageWidth
         let cellHeight = imageHeight * scale + imageInsets.top + imageInsets.bottom
-        //let cellHeight = CGFloat(500)
         return cellHeight
     }
 }
@@ -149,14 +142,29 @@ extension ImagesListViewController: UITableViewDataSource {
         cellForRowAt indexPath: IndexPath
     ) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ImagesListCell.reuseIdentifier, for: indexPath)
+        
         guard let imageListCell = cell as? ImagesListCell else {
             return UITableViewCell()
         }
+        imageListCell.delegate = self
         
         configCell(for: imageListCell, with: indexPath)
         return imageListCell
     }
-    
+}
+
+extension ImagesListViewController: ImagesListCellDelegate {
+    func imageListCellDidTapLike(_ cell: ImagesListCell) {
+        guard let indexPath = tableView.indexPath(for: cell) else { return }
+        let photo = photos[indexPath.row]
+        UIBlockingProgressHUD.show()
+        Task {
+            try await imagesListService.changeLike(photoId: photo.id, isLike: !photo.isLiked)
+            self.photos = self.imagesListService.photos
+            cell.setIsLiked(self.photos[indexPath.row].isLiked)
+            UIBlockingProgressHUD.dismiss()
+        }
+    }
 }
 
 extension ImagesListViewController {

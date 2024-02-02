@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class SingleImageViewController: UIViewController {
     private var image: UIImage! {
@@ -16,15 +17,31 @@ final class SingleImageViewController: UIViewController {
         }
     }
     
+    var fullImageUrl: URL?
+    
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var scrollView: UIScrollView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        imageView.image = image
-        rescaleAndCenterImageInScrollView(image: image)
+        getImage()
         scrollView.minimumZoomScale = 0.1
         scrollView.maximumZoomScale = 1.25
+    }
+    
+    func getImage() {
+        UIBlockingProgressHUD.show()
+        imageView.kf.setImage(with: fullImageUrl) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let image):
+                self.setImage(image: image.image)
+                self.rescaleAndCenterImageInScrollView(image: image.image)
+                UIBlockingProgressHUD.dismiss()
+            case .failure:
+                print("Error")
+            }
+        }
     }
     
     func setImage(image: UIImage?) {

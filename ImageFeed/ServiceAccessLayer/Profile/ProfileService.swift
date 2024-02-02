@@ -40,6 +40,11 @@ final class ProfileService {
         
         self.profile = Profile(username: username, name: name, loginName: loginName, bio: bio)
     }
+    
+    func logout() {
+        OAuth2Service.shared.removeAuthToken()
+        CleanCookies.clean()
+    }
 }
 
 private extension ProfileService {

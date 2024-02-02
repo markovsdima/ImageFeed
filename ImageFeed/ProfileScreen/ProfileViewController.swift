@@ -184,13 +184,44 @@ final class ProfileViewController: UIViewController {
         ])
     }
     
+    private func showLogoutAlert() {
+        let alert = UIAlertController(
+            title: "Пока, пока!",
+            message: "Уверены что хотите выйти?",
+            preferredStyle: .alert
+        )
+        
+        alert.addAction(UIAlertAction(
+            title: "Да",
+            style: .default
+        ) { [weak self] action in
+            guard let self = self else {return}
+            profileService.logout()
+            switchToSplashViewController()
+        })
+        
+        alert.addAction(UIAlertAction(
+            title: "Нет",
+            style: .default
+        ))
+        
+        present(alert, animated: true)
+    }
+    
     private func setMainBgColor(_ color: UIColor) {
         view.backgroundColor = color
     }
     
     @objc private func buttonClicked() {
-    // TODO: profile logout function call
-        
+        showLogoutAlert()
+    }
+}
+
+extension ProfileViewController {
+    func switchToSplashViewController() {
+        guard let window = UIApplication.shared.windows.first else { preconditionFailure("Invalid Configuration") }
+        let splashViewController = SplashViewController()
+        window.rootViewController = splashViewController
     }
 }
 
