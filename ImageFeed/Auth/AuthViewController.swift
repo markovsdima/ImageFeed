@@ -33,6 +33,23 @@ final class AuthViewController: UIViewController {
         setupLoginButtonViewConstraints()
     }
     
+    // MARK: - Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == ShowWebViewSegueIdentifier {
+            guard
+                let webViewViewController = segue.destination as? WebViewViewController
+            else { fatalError("Failed to prepare for \(ShowWebViewSegueIdentifier)") }
+            
+            let authHelper = AuthHelper()
+            let webViewPresenter = WebViewPresenter(authHelper: authHelper)
+            webViewViewController.presenter = webViewPresenter
+            webViewPresenter.view = webViewViewController
+            webViewViewController.delegate = self
+        } else {
+            super.prepare(for: segue, sender: sender)
+        }
+    }
+    
     // MARK: - Private Methods
     private func setupAuthLogoImageView(with logo: UIImage?) {
         let imageView = UIImageView(image: logo)
@@ -85,16 +102,6 @@ final class AuthViewController: UIViewController {
         self.performSegue(withIdentifier: ShowWebViewSegueIdentifier, sender: self)
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == ShowWebViewSegueIdentifier {
-            guard
-                let webViewViewController = segue.destination as? WebViewViewController
-            else { fatalError("Failed to prepare for \(ShowWebViewSegueIdentifier)") }
-            webViewViewController.delegate = self
-        } else {
-            super.prepare(for: segue, sender: sender)
-        }
-    }
 }
 
 extension AuthViewController {
