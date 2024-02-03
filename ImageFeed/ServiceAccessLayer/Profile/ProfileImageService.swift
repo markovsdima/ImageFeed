@@ -8,12 +8,16 @@
 import Foundation
 
 final class ProfileImageService {
+    
+    // MARK: - Public Properties
     static let shared = ProfileImageService()
     static let didChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")
     
+    // MARK: - Private Properties
     private let session = URLSession.shared
     private (set) var avatarURL: String?
     
+    // MARK: - Public Methods
     func fetchProfileImageURL(_ token: String, username: String?) async throws {
         guard
             let username = username,

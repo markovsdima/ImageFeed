@@ -14,13 +14,17 @@ protocol WebViewViewControllerDelegate: AnyObject {
 }
 
 final class WebViewViewController: UIViewController {
+    
+    // MARK: - Public Properties
+    weak var delegate: WebViewViewControllerDelegate?
+    
+    // MARK: - Private Properties
     private var webView: WKWebView?
     private var navBackButton: UIButton?
     private var progressView: UIProgressView?
     private var estimatedProgressObservation: NSKeyValueObservation?
     
-    weak var delegate: WebViewViewControllerDelegate?
-    
+    // MARK: - View Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -42,6 +46,7 @@ final class WebViewViewController: UIViewController {
              }
     }
     
+    // MARK: - Private Methods
     private func updateProgress() {
         guard let progressView, let webView else { return }
         progressView.progress = Float(webView.estimatedProgress)
@@ -110,7 +115,7 @@ final class WebViewViewController: UIViewController {
         ])
     }
     
-    @objc func didTapBackButton() {
+    @objc private func didTapBackButton() {
         delegate?.webViewViewControllerDidCancel(self)
     }
 }

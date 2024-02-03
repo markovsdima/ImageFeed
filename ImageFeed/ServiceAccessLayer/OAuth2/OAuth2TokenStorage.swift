@@ -9,10 +9,13 @@ import Foundation
 import SwiftKeychainWrapper
 
 final class OAuth2TokenStorage {
-    let accessToken = ""
     
-    let keychain = KeychainWrapper.standard
+    // MARK: - Public Properties
+    static let shared = OAuth2TokenStorage()
     
+    // MARK: - Private Properties
+    private let keychain = KeychainWrapper.standard
+    private let accessToken = ""
     var token: String? {
         get {
             keychain.string(forKey: accessToken)
@@ -23,6 +26,10 @@ final class OAuth2TokenStorage {
         }
     }
     
+    // MARK: - Initializers
+    private init() {}
+    
+    // MARK: - Public Methods
     func removeToken() {
         keychain.removeObject(forKey: accessToken)
     }

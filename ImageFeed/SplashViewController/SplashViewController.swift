@@ -5,21 +5,21 @@
 //  Created by Dmitry Markovskiy on 26.12.2023.
 //
 
-import UIKit
 import ProgressHUD
+import UIKit
 
 final class SplashViewController: UIViewController {
+    
+    // MARK: - Private Properties
     private let splashLogo = UIImage(named: "LaunchScreenLogo")
     private var splashLogoImageView: UIImageView?
-    
     private let ShowAuthenticationScreenSegueIdentifier = "ShowAuthenticationScreen"
-    
-    private let oauth2Service = OAuth2Service()
-    private let oauth2TokenStorage = OAuth2TokenStorage()
-    
+    private let oauth2Service = OAuth2Service.shared
+    private let oauth2TokenStorage = OAuth2TokenStorage.shared
     private let profileService = ProfileService.shared
     private let profileImageService = ProfileImageService.shared
     
+    // MARK: - View Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -37,6 +37,7 @@ final class SplashViewController: UIViewController {
         }
     }
     
+    // MARK: - Private Methods
     private func showAuthViewController() {
         guard let authViewController = UIStoryboard(
             name: "Main",

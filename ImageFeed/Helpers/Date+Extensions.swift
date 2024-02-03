@@ -14,6 +14,14 @@ private let dateTimeDefaultFormatter: DateFormatter = {
     return dateFormatter
 }()
 
+private let dateDefaultFormatter: DateFormatter = {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "d MMMM YYYY"
+    return dateFormatter
+}()
+
 extension Date {
     var dateTimeString: String { dateTimeDefaultFormatter.string(from: self) }
+    var dateString: String { dateDefaultFormatter.string(from: self) }
 }
+
