@@ -71,6 +71,7 @@ final class AuthViewController: UIViewController {
     
     private func setupLoginButtonView() {
         let button = UIButton(type: .custom)
+        button.accessibilityIdentifier = "Authenticate"
         button.setTitle("Войти", for: .normal)
         button.setTitleColor(UIColor.ypBlack, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .bold)
