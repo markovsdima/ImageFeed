@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		3218A9F52B61869D00F9ACFA /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3218A9F42B61869D00F9ACFA /* TabBarController.swift */; };
-		32574BA02B1B42B10064167E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32574B9F2B1B42B10064167E /* Constants.swift */; };
 		32574BA32B1C962A0064167E /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32574BA22B1C962A0064167E /* AuthViewController.swift */; };
 		32574BA52B1CF6B30064167E /* WebViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32574BA42B1CF6B30064167E /* WebViewViewController.swift */; };
 		327706D62B60217D00B23FD7 /* ProfileImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 327706D52B60217D00B23FD7 /* ProfileImageService.swift */; };
@@ -73,7 +72,6 @@
 
 /* Begin PBXFileReference section */
 		3218A9F42B61869D00F9ACFA /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
-		32574B9F2B1B42B10064167E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		32574BA22B1C962A0064167E /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		32574BA42B1CF6B30064167E /* WebViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewViewController.swift; sourceTree = "<group>"; };
 		327706D52B60217D00B23FD7 /* ProfileImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageService.swift; sourceTree = "<group>"; };
@@ -241,7 +239,6 @@
 				32A1C8A12AF433730023D159 /* LaunchScreen.storyboard */,
 				32A1C8A42AF433730023D159 /* Info.plist */,
 				32A267B82B0BEAAB0019D23B /* Helpers */,
-				32574B9F2B1B42B10064167E /* Constants.swift */,
 			);
 			path = ImageFeed;
 			sourceTree = "<group>";
@@ -491,7 +488,6 @@
 				32CFD6CA2B68A97A00315E3D /* PhotoResult.swift in Sources */,
 				327706D62B60217D00B23FD7 /* ProfileImageService.swift in Sources */,
 				32C3CBD72B66D5F900FBE1DB /* ProfileResult.swift in Sources */,
-				32574BA02B1B42B10064167E /* Constants.swift in Sources */,
 				3218A9F52B61869D00F9ACFA /* TabBarController.swift in Sources */,
 				32574BA52B1CF6B30064167E /* WebViewViewController.swift in Sources */,
 				32C3CBD32B66D50400FBE1DB /* NetworkError.swift in Sources */,

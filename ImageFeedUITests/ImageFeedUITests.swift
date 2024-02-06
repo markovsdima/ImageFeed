@@ -11,10 +11,10 @@ final class ImageFeedUITests: XCTestCase {
     private let app = XCUIApplication()
     
     enum PersonalDataForTests {
-        static let email = ""
-        static let passwd = ""
-        static let fullName = ""
-        static let login = "" //without @
+        static let email = "markovskii-dmitrii@yandex.ru"
+        static let passwd = "Ramzes-king20"
+        static let fullName = "Dmitrii Markovskii"
+        static let login = "markovsdima" //without @
     }
     
     override func setUpWithError() throws {
@@ -34,8 +34,9 @@ final class ImageFeedUITests: XCTestCase {
         XCTAssertTrue(loginTextField.waitForExistence(timeout: 3))
         
         loginTextField.tap()
+        sleep(2)
         loginTextField.typeText(PersonalDataForTests.email)
-        webView.tap()
+        XCUIApplication().toolbars.buttons["Done"].tap()
         
         let passwordTextField = webView.descendants(matching: .secureTextField).element
         XCTAssertTrue(passwordTextField.waitForExistence(timeout: 3))
@@ -44,7 +45,7 @@ final class ImageFeedUITests: XCTestCase {
         sleep(2)
         passwordTextField.typeText(PersonalDataForTests.passwd)
         sleep(2)
-        webView.tap()
+        XCUIApplication().toolbars.buttons["Done"].tap()
         
         webView.buttons["Login"].tap()
         
