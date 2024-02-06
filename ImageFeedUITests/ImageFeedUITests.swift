@@ -11,10 +11,10 @@ final class ImageFeedUITests: XCTestCase {
     private let app = XCUIApplication()
     
     enum PersonalDataForTests {
-        static let email = "markovskii-dmitrii@yandex.ru"
-        static let passwd = "Ramzes-king20"
-        static let fullName = "Dmitrii Markovskii"
-        static let login = "markovsdima" //without @
+        static let email = ""
+        static let passwd = ""
+        static let fullName = ""
+        static let login = "" //without @
     }
     
     override func setUpWithError() throws {
