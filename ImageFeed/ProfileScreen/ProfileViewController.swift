@@ -168,6 +168,7 @@ final class ProfileViewController: UIViewController {
                                            action: #selector(self.buttonClicked))
         
         button.tintColor = UIColor.ypRed
+        button.accessibilityIdentifier = "LogoutButton"
         view.addSubview(button)
         self.profileLogoutButton = button
     }
@@ -190,6 +191,8 @@ final class ProfileViewController: UIViewController {
             message: "Уверены что хотите выйти?",
             preferredStyle: .alert
         )
+        
+        alert.view.accessibilityIdentifier = "LogoutAlert"
         
         alert.addAction(UIAlertAction(
             title: "Да",

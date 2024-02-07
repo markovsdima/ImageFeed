@@ -33,6 +33,23 @@ final class AuthViewController: UIViewController {
         setupLoginButtonViewConstraints()
     }
     
+    // MARK: - Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == ShowWebViewSegueIdentifier {
+            guard
+                let webViewViewController = segue.destination as? WebViewViewController
+            else { print("Failed to prepare for \(ShowWebViewSegueIdentifier)"); return }
+            
+            let authHelper = AuthHelper()
+            let webViewPresenter = WebViewPresenter(authHelper: authHelper)
+            webViewViewController.presenter = webViewPresenter
+            webViewPresenter.view = webViewViewController
+            webViewViewController.delegate = self
+        } else {
+            super.prepare(for: segue, sender: sender)
+        }
+    }
+    
     // MARK: - Private Methods
     private func setupAuthLogoImageView(with logo: UIImage?) {
         let imageView = UIImageView(image: logo)
@@ -54,6 +71,7 @@ final class AuthViewController: UIViewController {
     
     private func setupLoginButtonView() {
         let button = UIButton(type: .custom)
+        button.accessibilityIdentifier = "Authenticate"
         button.setTitle("Войти", for: .normal)
         button.setTitleColor(UIColor.ypBlack, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .bold)
@@ -85,16 +103,6 @@ final class AuthViewController: UIViewController {
         self.performSegue(withIdentifier: ShowWebViewSegueIdentifier, sender: self)
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == ShowWebViewSegueIdentifier {
-            guard
-                let webViewViewController = segue.destination as? WebViewViewController
-            else { fatalError("Failed to prepare for \(ShowWebViewSegueIdentifier)") }
-            webViewViewController.delegate = self
-        } else {
-            super.prepare(for: segue, sender: sender)
-        }
-    }
 }
 
 extension AuthViewController {
