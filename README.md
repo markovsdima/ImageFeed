@@ -1,2 +1,4 @@
 
-<img width="430" src="https://github.com/user-attachments/assets/c09691c2-a05f-4e7b-8c05-ca3096f6f5a7" />
+|     |      |
+| --- | :--- |
+| <img width="330" src="https://github.com/user-attachments/assets/031ae5a1-4ce7-4456-bfce-89850c42da9c" /> | <h1>ImageFeed</h1>Многостраничное приложение для просмотра изображений через API Unsplash |
